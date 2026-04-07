@@ -35,8 +35,14 @@ import { PayloadDto } from './auth/types/jwtPayload.dto';
           buildSchemaOptions: { numberScalarMode: 'integer' },
           validationRules: [depthLimit(5)],
           context: async ({ req, res }: { req: Request; res: Response }) => {
-            const token =
-              req.headers.jwt ?? (req.cookies && req.cookies['jwt']);
+            const authHeader = req.headers['authorization'] as
+              | string
+              | undefined;
+            const bearerToken = authHeader?.startsWith('Bearer ')
+              ? authHeader.slice(7)
+              : null;
+            const cookieToken = req.cookies?.['jwt'] ?? null;
+            const token = bearerToken ?? cookieToken;
 
             let jwtPayload: PayloadDto | null = null;
             if (token) {
