@@ -29,6 +29,7 @@ describe("le composant PageTitle", () => {
   });
 
   it("affiche uniquement le titre et l'icon si prevPath est une fonction", async () => {
+    const user = userEvent.setup();
     const goBack = vi.fn();
     render(<PageTitle title="Title" prevPath={goBack} />);
 
@@ -38,8 +39,7 @@ describe("le composant PageTitle", () => {
     const buttonLink = getButton();
     expect(buttonLink).toBeInTheDocument();
 
-    userEvent.click(buttonLink!);
-
-    await waitFor(() => expect(goBack).toHaveBeenCalled());
+    await user.click(buttonLink!);
+    expect(goBack).toHaveBeenCalled();
   });
 });
