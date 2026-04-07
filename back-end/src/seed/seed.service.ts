@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ActivityService } from '../activity/activity.service';
-import { UserService } from '../user/user.service';
+import { ActivityService } from 'src/activity/activity.service';
+import { UserService } from 'src/user/user.service';
 import { activities as activitiesData } from './activity.data';
 import { user as userData, admin as adminData } from './user.data';
 
