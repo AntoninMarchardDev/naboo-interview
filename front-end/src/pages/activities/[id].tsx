@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps<
   return { props: { activity: response.data.getActivity } };
 };
 
-export default function ActivityDetails({ activity }: ActivityDetailsProps) {
+export default function ActivityDetailPage({ activity }: ActivityDetailsProps) {
   const router = useRouter();
 
   return (
