@@ -23,7 +23,7 @@ import { ContextWithJWTPayload } from 'src/auth/types/context';
 export class ActivityResolver {
   constructor(
     private readonly activityService: ActivityService,
-    private readonly userServices: UserService,
+    private readonly userService: UserService,
   ) {}
 
   @ResolveField(() => ID)
