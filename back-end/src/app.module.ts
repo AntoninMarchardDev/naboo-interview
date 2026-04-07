@@ -7,7 +7,6 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { MeModule } from './me/me.module';
 import { SeedModule } from './seed/seed.module';
-import { SeedService } from './seed/seed.service';
 import { UserModule } from './user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -66,7 +65,7 @@ import { PayloadDto } from './auth/types/jwtPayload.dto';
     SeedModule,
   ],
   controllers: [AppController],
-  providers: [AppService, SeedService],
+  providers: [AppService],
 })
 export class BaseAppModule {}
 
