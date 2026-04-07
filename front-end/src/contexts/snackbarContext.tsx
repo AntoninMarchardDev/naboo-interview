@@ -1,6 +1,6 @@
 import { Notification } from "@mantine/core";
-import { IconX } from "@tabler/icons-react";
-import { createContext, useEffect, useState } from "react";
+import { IconCheck, IconX } from "@tabler/icons-react";
+import { createContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 interface SnackbarContextType {
   error: (message: string) => void;
@@ -17,36 +17,39 @@ export const SnackbarContext = createContext<SnackbarContextType>({
   success: () => {},
 });
 
-export const SnackbarProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const SnackbarProvider = ({ children }: { children: React.ReactNode }) => {
   const [snackbar, setSnackbar] = useState<Snackbar | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const error = (message: string) => {
-    console.error(message);
-    setSnackbar({ message, type: "error" });
-  };
+  const scheduleHide = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setSnackbar(null), 3000);
+  }, []);
 
-  const success = (message: string) => {
-    setSnackbar({ message, type: "success" });
-  };
+  // Clear timer on unmount
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 
   useEffect(() => {
-    if (snackbar) {
-      setTimeout(() => {
-        setSnackbar(null);
-      }, 1000);
-    }
-  }, [snackbar]);
+    if (snackbar) scheduleHide();
+  }, [snackbar, scheduleHide]);
+
+  const error = useCallback((message: string) => {
+    if (process.env.NODE_ENV === "development") console.error(message);
+    setSnackbar({ message, type: "error" });
+  }, []);
+
+  const success = useCallback((message: string) => {
+    setSnackbar({ message, type: "success" });
+  }, []);
+
+  const value = useMemo(() => ({ error, success }), [error, success]);
 
   return (
-    <SnackbarContext.Provider value={{ success, error }}>
+    <SnackbarContext.Provider value={value}>
       {children}
       {snackbar && (
         <Notification
-          icon={<IconX size="1.1rem" />}
+          icon={snackbar.type === "error" ? <IconX size="1.1rem" /> : <IconCheck size="1.1rem" />}
           color={snackbar.type === "error" ? "red" : "green"}
           style={{ position: "fixed", right: 10, bottom: 10, zIndex: 999 }}
         >
