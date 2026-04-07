@@ -17,7 +17,7 @@ import GetUser from "@/graphql/queries/auth/getUser";
 import { useSnackbar } from "@/hooks";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 
 interface AuthContextType {
   user: GetUserQuery["getMe"] | null;
@@ -50,64 +50,59 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [signup] = useMutation<SignupMutation, SignupMutationVariables>(Signup);
   const [logout] = useMutation<LogoutMutation, LogoutMutationVariables>(Logout);
 
+  // Run once on mount: attempt to restore session from the httpOnly cookie.
+  // No localStorage — the cookie is the source of truth.
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    getUser()
+      .then((res) => setUser(res.data?.getMe ?? null))
+      .catch(() => setUser(null))
+      .finally(() => setIsLoading(false));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (!user && token) {
-      getUser()
-        .then((res) => setUser(res.data?.getMe || null))
-        .finally(() => setIsLoading(false));
-    } else {
-      setIsLoading(false);
-    }
-  }, [user]);
-
-  const handleSignin = async (input: SignInInput) => {
+  const handleSignin = useCallback(async (input: SignInInput) => {
     try {
       setIsLoading(true);
-      const response = await signin({ variables: { signInInput: input } });
-      const token = response.data?.login?.access_token || "";
-      localStorage.setItem("token", token);
-      await getUser().then((res) => setUser(res.data?.getMe || null));
+      await signin({ variables: { signInInput: input } });
+      // Re-fetch user from the cookie the server just set
+      const res = await getUser();
+      setUser(res.data?.getMe ?? null);
       router.push("/profil");
-    } catch (err) {
+    } catch {
       snackbar.error("Une erreur est survenue");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [signin, getUser, router, snackbar]);
 
-  const handleSignup = async (input: SignUpInput) => {
+  const handleSignup = useCallback(async (input: SignUpInput) => {
     try {
       setIsLoading(true);
       await signup({ variables: { signUpInput: input } });
       router.push("/signin");
-    } catch (err) {
+    } catch {
       snackbar.error("Une erreur est survenue");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [signup, router, snackbar]);
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     try {
       setIsLoading(true);
       await logout();
-      localStorage.removeItem("token");
       setUser(null);
       router.push("/");
-    } catch (err) {
+    } catch {
       snackbar.error("Une erreur est survenue");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [logout, router, snackbar]);
 
-  return (
-    <AuthContext.Provider
-      value={{ user, isLoading, handleSignin, handleSignup, handleLogout }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({ user, isLoading, handleSignin, handleSignup, handleLogout }),
+    [user, isLoading, handleSignin, handleSignup, handleLogout]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
