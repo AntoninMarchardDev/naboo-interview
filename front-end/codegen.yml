@@ -1,13 +1,13 @@
 overwrite: true
-schema: "http://localhost:3000/graphql"
+schema: "./src/graphql/schema.gql"
+documents:
+  - "./src/graphql/**/*.ts"
 generates:
   ./src/graphql/generated/types.ts:
     plugins:
       - typescript
       - typescript-operations
-      - typescript-resolvers
     config:
       gqlImport: "graphql-tag"
-
-documents:
-  - "./src/graphql/**/*.ts"
+      scalars:
+        DateTime: string
