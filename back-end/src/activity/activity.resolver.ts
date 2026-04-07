@@ -15,7 +15,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { UserService } from 'src/user/user.service';
 import { Activity } from './activity.schema';
 
-import { CreateActivityInput } from './activity.inputs.dto';
+import { CreateActivityInput } from './types';
 import { User } from 'src/user/user.schema';
 import { ContextWithJWTPayload } from 'src/auth/types/context';
 
