@@ -54,23 +54,5 @@ export class UserService {
     return this.userModel.countDocuments().exec();
   }
 
-  async setDebugMode({
-    userId,
-    enabled,
-  }: {
-    userId: string;
-    enabled: boolean;
-  }): Promise<User> {
-    const user = await this.userModel.findByIdAndUpdate(
-      userId,
-      {
-        debugModeEnabled: enabled,
-      },
-      { new: true },
-    );
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-    return user;
-  }
+
 }
