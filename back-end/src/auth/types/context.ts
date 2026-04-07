@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PayloadDto } from './jwtPayload.dto';
+import { PayloadDto } from './jwt-payload.dto';
 
 export interface GqlContext {
   req: Request;

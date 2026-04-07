@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
 import { SignInDto, SignInInput, SignUpInput } from './types';
-import { PayloadDto } from './types/jwtPayload.dto';
+import { PayloadDto } from './types/jwt-payload.dto';
 
 @Injectable()
 export class AuthService {

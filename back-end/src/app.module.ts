@@ -13,7 +13,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
-import { PayloadDto } from './auth/types/jwtPayload.dto';
+import { PayloadDto } from './auth/types/jwt-payload.dto';
 
 @Module({
   imports: [
