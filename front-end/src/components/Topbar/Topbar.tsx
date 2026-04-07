@@ -1,6 +1,5 @@
 import { useAuth } from "@/hooks";
-import { Burger, Container, Group, Header } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { Container, Group, Header } from "@mantine/core";
 import Link from "next/link";
 import { MenuItem } from "./MenuItem";
 import { useTopbarStyles } from "./Topbar.styles";
@@ -12,7 +11,6 @@ interface TopbarProps {
 }
 
 export function Topbar({ routes }: TopbarProps) {
-  const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useTopbarStyles();
   const { user } = useAuth();
   const filteredRoutes = getFilteredRoutes(routes, user);
@@ -22,20 +20,14 @@ export function Topbar({ routes }: TopbarProps) {
       <Container>
         <div className={classes.inner}>
           <Link href="/" className={classes.mainLink}>
-            <h1 className={classes.title} data-testid='header'>Candidator</h1>
+            <h1 className={classes.title} data-testid="header">Candidator</h1>
           </Link>
           <Group spacing={5} className={classes.links}>
             {filteredRoutes.map((route) => (
               <MenuItem key={route.label} {...route} />
             ))}
           </Group>
-          <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size="sm"
-            color="#fff"
-          />
+          {/* Burger — mobile drawer not yet implemented */}
         </div>
       </Container>
     </Header>
