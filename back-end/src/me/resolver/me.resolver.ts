@@ -5,7 +5,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/user.schema';
 import { ContextWithJWTPayload } from 'src/auth/types/context';
 
-@Resolver('Me')
+@Resolver(() => User)
 export class MeResolver {
   constructor(private readonly userService: UserService) {}
 

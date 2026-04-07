@@ -6,7 +6,7 @@ import { GqlContext } from 'src/auth/types/context';
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
-@Resolver('Auth')
+@Resolver(() => SignInDto)
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
