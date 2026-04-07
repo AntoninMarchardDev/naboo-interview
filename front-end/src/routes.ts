@@ -10,7 +10,7 @@ export const routes: Route[] = [
     icon: IconUserCircle,
     route: [
       {
-        label: "Connection",
+        label: "Connexion",
         link: "/signin",
         requiredAuth: false,
       },
@@ -20,7 +20,7 @@ export const routes: Route[] = [
         requiredAuth: false,
       },
       { label: "Profil", link: "/profil", requiredAuth: true },
-      { label: "Déconnection", link: "/logout", requiredAuth: true },
+      { label: "Déconnexion", link: "/logout", requiredAuth: true },
     ],
   },
 ];

@@ -45,14 +45,14 @@ export default function SignupForm() {
         />
         <TextInput
           withAsterisk
-          label="First name"
-          placeholder="John"
+          label="Prénom"
+          placeholder="Jean"
           {...form.getInputProps("firstName")}
         />
         <TextInput
           withAsterisk
-          label="Last name"
-          placeholder="Doe"
+          label="Nom"
+          placeholder="Dupont"
           {...form.getInputProps("lastName")}
         />
         <Box mt="md" sx={{ display: "flex", justifyContent: "space-between" }}>
