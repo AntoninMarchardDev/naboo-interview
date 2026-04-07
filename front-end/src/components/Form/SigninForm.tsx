@@ -5,7 +5,7 @@ import Link from "next/link";
 import { emailValidation, passwordValidation } from "./validationRules";
 import { SignInInput } from "@/graphql/generated/types";
 
-export default function SigninForm() {
+export function SigninForm() {
   const { handleSignin, isLoading } = useAuth();
   const form = useForm<SignInInput>({
     initialValues: {

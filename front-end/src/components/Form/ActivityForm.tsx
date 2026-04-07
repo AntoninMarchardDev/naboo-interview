@@ -23,7 +23,7 @@ type SelectData = {
   label: string;
 };
 
-export default function ActivityForm() {
+export function ActivityForm() {
   const snackbar = useSnackbar();
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);

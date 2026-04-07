@@ -10,7 +10,7 @@ import {
 } from "./validationRules";
 import { SignUpInput } from "@/graphql/generated/types";
 
-export default function SignupForm() {
+export function SignupForm() {
   const { handleSignup, isLoading } = useAuth();
   const form = useForm<SignUpInput>({
     initialValues: {

@@ -1,5 +1,5 @@
 import { PageTitle } from "@/components";
-import ActivityForm from "@/components/Form/ActivityForm";
+import { ActivityForm } from "@/components/Form";
 import { withAuth } from "@/hocs";
 import { Paper } from "@mantine/core";
 import Head from "next/head";
