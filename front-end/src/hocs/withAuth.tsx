@@ -3,9 +3,8 @@ import { Box, Loader } from "@mantine/core";
 import { useRouter } from "next/router";
 import { ComponentType, useEffect } from "react";
 
-export function withAuth(WrappedComponent: ComponentType<any>) {
-  // eslint-disable-next-line react/display-name
-  return (props: any) => {
+export function withAuth<P extends object>(WrappedComponent: ComponentType<P>) {
+  const WithAuth = (props: P) => {
     const { user, isLoading } = useAuth();
     const router = useRouter();
 
@@ -15,13 +14,17 @@ export function withAuth(WrappedComponent: ComponentType<any>) {
       }
     }, [isLoading, router, user]);
 
-    if (isLoading)
+    if (isLoading) {
       return (
         <Box sx={{ textAlign: "center" }}>
           <Loader sx={{ marginTop: "10rem" }} />
         </Box>
       );
+    }
 
-    return !isLoading && user && <WrappedComponent {...props} />;
+    return user ? <WrappedComponent {...props} /> : null;
   };
+
+  WithAuth.displayName = `withAuth(${WrappedComponent.displayName ?? WrappedComponent.name})`;
+  return WithAuth;
 }
