@@ -1,5 +1,5 @@
 import { ActivityListItem, EmptyData, Filters, PageTitle } from "@/components";
-import { graphqlClient } from "@/graphql/apollo";
+import { getApolloClient } from "@/graphql/apollo";
 import {
   GetActivitiesByCityQuery,
   GetActivitiesByCityQueryVariables,
@@ -30,7 +30,8 @@ export const getServerSideProps: GetServerSideProps<CityDetailsProps> = async ({
   )
     return { notFound: true };
 
-  const response = await graphqlClient.query<
+  const client = getApolloClient();
+  const response = await client.query<
     GetActivitiesByCityQuery,
     GetActivitiesByCityQueryVariables
   >({

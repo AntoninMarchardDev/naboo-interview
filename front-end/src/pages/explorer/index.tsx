@@ -1,5 +1,5 @@
 import { City, EmptyData, PageTitle } from "@/components";
-import { graphqlClient } from "@/graphql/apollo";
+import { getApolloClient } from "@/graphql/apollo";
 import {
   GetCitiesQuery,
   GetCitiesQueryVariables,
@@ -16,7 +16,8 @@ interface ExplorerProps {
 export const getServerSideProps: GetServerSideProps<
   ExplorerProps
 > = async () => {
-  const response = await graphqlClient.query<
+  const client = getApolloClient();
+  const response = await client.query<
     GetCitiesQuery,
     GetCitiesQueryVariables
   >({
