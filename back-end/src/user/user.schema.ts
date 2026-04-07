@@ -23,7 +23,7 @@ export class User extends Document {
   @Prop({ required: true, unique: true })
   email!: string;
 
-  @Field()
+  // No @Field() — never exposed via GraphQL
   @Prop({ required: true })
   password!: string;
 
