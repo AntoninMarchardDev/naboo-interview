@@ -32,9 +32,9 @@ export class ActivityResolver {
   }
 
   @ResolveField(() => User)
-  async owner(@Parent() activity: Activity): Promise<User> {
-    await activity.populate('owner');
-    return activity.owner;
+  owner(@Parent() activity: Activity): User {
+    // Already populated in the service — no async work needed
+    return activity.owner as User;
   }
 
   @Query(() => [Activity])
