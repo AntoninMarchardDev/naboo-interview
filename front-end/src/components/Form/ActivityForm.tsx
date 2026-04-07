@@ -1,4 +1,5 @@
-import { useDebounced, useSnackbar } from "@/hooks";
+import { useSnackbar } from "@/hooks";
+import { useDebouncedValue } from "@mantine/hooks";
 import { searchCity } from "@/services";
 import { Box, Button, Group, Select, TextInput, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -27,7 +28,7 @@ export function ActivityForm() {
   const snackbar = useSnackbar();
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const debouncedSearch = useDebounced(searchValue, 300);
+  const [debouncedSearch] = useDebouncedValue(searchValue, 300);
   const [displayedCities, setDisplayedCities] = useState<SelectData[]>([]);
   const router = useRouter();
 

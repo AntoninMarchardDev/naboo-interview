@@ -5,7 +5,7 @@ import {
   GetActivitiesByCityQueryVariables,
 } from "@/graphql/generated/types";
 import GetActivitiesByCity from "@/graphql/queries/activity/getActivitiesByCity";
-import { useDebounced } from "@/hooks";
+import { useDebouncedValue } from "@mantine/hooks";
 import { Divider, Flex, Grid } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -55,12 +55,12 @@ export default function CityExplorerPage({
   const [searchActivity, setSearchActivity] = useState<string | undefined>(
     typeof router.query.activity === "string" ? router.query.activity : undefined
   );
-  const debouncedSearchActivity = useDebounced(searchActivity, 300);
+  const [debouncedSearchActivity] = useDebouncedValue(searchActivity, 300);
 
   const [searchPrice, setSearchPrice] = useState<number | undefined>(
     typeof router.query.price === "string" ? Number(router.query.price) : undefined
   );
-  const debouncedSearchPrice = useDebounced(searchPrice, 300);
+  const [debouncedSearchPrice] = useDebouncedValue(searchPrice, 300);
 
   useEffect(() => {
     const params = new URLSearchParams();
