@@ -20,6 +20,7 @@ export class ActivityService {
       .find()
       .populate('owner')
       .sort({ createdAt: -1 })
+      .lean<Activity[]>()
       .exec();
   }
 
@@ -29,6 +30,7 @@ export class ActivityService {
       .populate('owner')
       .sort({ createdAt: -1 })
       .limit(3)
+      .lean<Activity[]>()
       .exec();
   }
 
@@ -81,6 +83,7 @@ export class ActivityService {
         ],
       })
       .populate('owner')
+      .lean<Activity[]>()
       .exec();
   }
 
