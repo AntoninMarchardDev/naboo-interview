@@ -1,5 +1,5 @@
 import {
-  HttpException,
+  ConflictException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -21,13 +21,11 @@ export class AuthService {
     const user = await this.userService.getByEmail(email);
     const isSamePassword = await bcrypt.compare(password, user.password);
 
-    if (!isSamePassword)
-      throw new HttpException('Wrong credentials provided', 400);
+    if (!isSamePassword) throw new UnauthorizedException('Invalid credentials');
 
     const token = await this.generateToken({ user });
 
-    await this.userService.updateToken(user.id, token);
-
+    // Token is stateless — no need to persist it in the DB
     return { access_token: token };
   }
 
@@ -47,9 +45,9 @@ export class AuthService {
     firstName,
     lastName,
   }: SignUpInput): Promise<User> {
-    const user = await this.userService.findByEmail(email);
+    const existing = await this.userService.findByEmail(email);
 
-    if (user) throw new UnauthorizedException();
+    if (existing) throw new ConflictException('Email already in use');
 
     return this.userService.createUser({
       email,
