@@ -15,7 +15,7 @@ const Profile = () => {
   return (
     <>
       <Head>
-        <title>Mon profil | CDTR</title>
+        <title>Mon profil | Candidator</title>
       </Head>
       <PageTitle title="Mon profil" />
       <Flex align="center" gap="md">

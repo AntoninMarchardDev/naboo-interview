@@ -31,7 +31,7 @@ const MyActivities = ({ activities }: MyActivitiesProps) => {
   return (
     <>
       <Head>
-        <title>Mes activités | CDTR</title>
+        <title>Mes activités | Candidator</title>
       </Head>
       <ActivitiesLayout
         title="Mes activités"

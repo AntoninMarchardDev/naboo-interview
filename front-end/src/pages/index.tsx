@@ -36,7 +36,7 @@ export default function Home({ activities }: HomeProps) {
   return (
     <>
       <Head>
-        <title>Accueil | CDTR</title>
+        <title>Accueil | Candidator</title>
         <meta name="description" content="Découvrez et partagez des activités près de chez vous." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

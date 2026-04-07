@@ -33,7 +33,7 @@ export default function Discover({ activities }: DiscoverProps) {
   return (
     <>
       <Head>
-        <title>Discover | CDTR</title>
+        <title>Discover | Candidator</title>
       </Head>
       <ActivitiesLayout
         title="Découvrez des activités"

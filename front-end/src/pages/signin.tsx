@@ -7,9 +7,9 @@ const Signin = () => {
   return (
     <>
       <Head>
-        <title>Connection | CDTR</title>
+        <title>Connexion | Candidator</title>
       </Head>
-      <PageTitle title="Connection" />
+      <PageTitle title="Connexion" />
       <Paper shadow="xs" p="md">
         <SigninForm />
       </Paper>

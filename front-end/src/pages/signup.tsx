@@ -7,7 +7,7 @@ const Signup = () => {
   return (
     <>
       <Head>
-        <title>Inscription | CDTR</title>
+        <title>Inscription | Candidator</title>
       </Head>
       <PageTitle title="Inscription" />
       <Paper shadow="xs" p="md">

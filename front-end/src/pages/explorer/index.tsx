@@ -30,7 +30,7 @@ export default function Explorer({ cities }: ExplorerProps) {
   return (
     <>
       <Head>
-        <title>Explorer | CDTR</title>
+        <title>Explorer | Candidator</title>
       </Head>
       <PageTitle title="Trouvez une activité dans votre ville" />
       <Flex direction="column" gap="1rem">

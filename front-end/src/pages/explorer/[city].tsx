@@ -80,7 +80,7 @@ export default function CityExplorerPage({
   return (
     <>
       <Head>
-        <title>{city} | CDTR</title>
+        <title>{city} | Candidator</title>
       </Head>
       <PageTitle
         title={`Activités pour la ville de ${city}`}

@@ -8,7 +8,7 @@ const CreateActivity = () => {
   return (
     <>
       <Head>
-        <title>Ajouter une activité | CDTR</title>
+        <title>Ajouter une activité | Candidator</title>
       </Head>
       <PageTitle title="Ajouter une activité" prevPath="/discover" />
       <Paper shadow="xs" p="md">
