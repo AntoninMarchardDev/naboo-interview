@@ -1,20 +1,16 @@
 import { PageTitle } from "@/components";
-import { graphqlClient } from "@/graphql/apollo";
 import { withAuth } from "@/hocs";
 import { useAuth } from "@/hooks";
 import { Avatar, Flex, Text } from "@mantine/core";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 
-interface ProfileProps {
-  favoriteActivities: {
-    id: string;
-    name: string;
-  }[];
-}
-
-const Profile = (props: ProfileProps) => {
+const Profile = () => {
   const { user } = useAuth();
+
+  const initials =
+    user
+      ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase()
+      : "";
 
   return (
     <>
@@ -24,8 +20,7 @@ const Profile = (props: ProfileProps) => {
       <PageTitle title="Mon profil" />
       <Flex align="center" gap="md">
         <Avatar color="cyan" radius="xl" size="lg">
-          {user?.firstName[0]}
-          {user?.lastName[0]}
+          {initials}
         </Avatar>
         <Flex direction="column">
           <Text>{user?.email}</Text>
