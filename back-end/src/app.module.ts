@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import depthLimit from 'graphql-depth-limit';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ActivityModule } from './activity/activity.module';
@@ -32,6 +33,7 @@ import { PayloadDto } from './auth/types/jwtPayload.dto';
           playground: process.env.NODE_ENV !== 'production',
           introspection: process.env.NODE_ENV !== 'production',
           buildSchemaOptions: { numberScalarMode: 'integer' },
+          validationRules: [depthLimit(5)],
           context: async ({ req, res }: { req: Request; res: Response }) => {
             const token =
               req.headers.jwt ?? (req.cookies && req.cookies['jwt']);
