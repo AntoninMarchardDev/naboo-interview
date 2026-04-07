@@ -1,37 +1,38 @@
 type ValidationRule<T> = (value: T) => string | null;
 
 const isValidEmail = (value: string) => /^\S+@\S+$/.test(value);
-const isValidString = (value: string) => value.length > 0;
 const isNumberGreaterThanZero = (value: number) => value > 0;
 
 /**
  * User
  */
 export const emailValidation: ValidationRule<string> = (value) =>
-  isValidEmail(value) ? null : "Invalid email";
+  isValidEmail(value) ? null : "Email invalide";
 
-export const passwordValidation: ValidationRule<string> = (value) =>
-  isValidString(value) ? null : "Password required";
+export const passwordValidation: ValidationRule<string> = (value) => {
+  if (value.length < 8) return "Le mot de passe doit contenir au moins 8 caractères";
+  return null;
+};
 
 export const firstNameValidation: ValidationRule<string> = (value) =>
-  isValidString(value) ? null : "FirstName required";
+  value.trim().length > 0 ? null : "Le prénom est requis";
 
 export const lastNameValidation: ValidationRule<string> = (value) =>
-  isValidString(value) ? null : "LastName required";
+  value.trim().length > 0 ? null : "Le nom est requis";
 
 /**
  * Activity
  */
 export const nameValidation: ValidationRule<string> = (value) =>
-  isValidString(value) ? null : "Name required";
+  value.trim().length > 0 ? null : "Le nom est requis";
 
 export const descriptionValidation: ValidationRule<string> = (value) =>
-  isValidString(value) ? null : "Description required";
+  value.trim().length > 0 ? null : "La description est requise";
 
 export const cityValidation: ValidationRule<string> = (value) =>
-  isValidString(value) ? null : "Localisation required";
+  value.trim().length > 0 ? null : "La localisation est requise";
 
 export const priceValidation: ValidationRule<number> = (value) =>
   isNumberGreaterThanZero(value)
     ? null
-    : "Price required and must be greater than 0";
+    : "Le prix est requis et doit être supérieur à 0";
