@@ -12,10 +12,10 @@ export class AuthResolver {
 
   @Mutation(() => SignInDto)
   async login(
-    @Args('signInInput') loginUserDto: SignInInput,
+    @Args('signInInput') signInInput: SignInInput,
     @Context() ctx: GqlContext,
   ): Promise<SignInDto> {
-    const data = await this.authService.signIn(loginUserDto);
+    const data = await this.authService.signIn(signInInput);
     ctx.res.cookie('jwt', data.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -28,9 +28,9 @@ export class AuthResolver {
 
   @Mutation(() => User)
   async register(
-    @Args('signUpInput') createUserDto: SignUpInput,
+    @Args('signUpInput') signUpInput: SignUpInput,
   ): Promise<User> {
-    return this.authService.signUp(createUserDto);
+    return this.authService.signUp(signUpInput);
   }
 
   @Mutation(() => Boolean)
