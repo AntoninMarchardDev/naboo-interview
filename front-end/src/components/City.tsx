@@ -1,5 +1,6 @@
 import { useGlobalStyles } from "@/utils";
-import { Card, Image, Text } from "@mantine/core";
+import { Card, Text } from "@mantine/core";
+import Image from "next/image";
 import Link from "next/link";
 
 interface CityProps {
@@ -10,7 +11,7 @@ export function City({ city }: CityProps) {
   const { classes } = useGlobalStyles();
 
   return (
-    <Link href={`/explorer/${city}`} className={classes.link}>
+    <Link href={`/explorer/${encodeURIComponent(city)}`} className={classes.link}>
       <Card
         shadow="sm"
         padding="lg"
@@ -18,21 +19,19 @@ export function City({ city }: CityProps) {
         withBorder
         sx={{ width: "100%" }}
       >
-        <Card.Section>
+        <Card.Section style={{ position: "relative", height: 160 }}>
           <Image
-            src="https://dummyimage.com/480x4:3"
-            height={160}
-            alt="random image of city"
+            src="https://dummyimage.com/480x360"
+            fill
+            style={{ objectFit: "cover" }}
+            alt="city thumbnail"
           />
         </Card.Section>
         <Text mt="md" weight="bold">
           {city}
         </Text>
         <Text mt="md" sx={{ height: "3rem" }} className={classes.ellipsis}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          Découvrez les activités disponibles dans cette ville.
         </Text>
       </Card>
     </Link>

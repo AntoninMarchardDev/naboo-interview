@@ -5,7 +5,8 @@ import {
   GetActivityQueryVariables,
 } from "@/graphql/generated/types";
 import GetActivity from "@/graphql/queries/activity/getActivity";
-import { Badge, Flex, Grid, Group, Image, Text } from "@mantine/core";
+import { Badge, Flex, Grid, Group, Text } from "@mantine/core";
+import Image from "next/image";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -41,13 +42,14 @@ export default function ActivityDetails({ activity }: ActivityDetailsProps) {
       <PageTitle title={activity.name} prevPath={router.back} />
       <Grid>
         <Grid.Col span={7}>
-          <Image
-            src="https://dummyimage.com/640x4:3"
-            radius="md"
-            alt="random image of city"
-            width="100%"
-            height="400"
-          />
+          <div style={{ position: "relative", width: "100%", height: 400, borderRadius: "var(--mantine-radius-md)", overflow: "hidden" }}>
+            <Image
+              src="https://dummyimage.com/640x480"
+              fill
+              style={{ objectFit: "cover" }}
+              alt="activity image"
+            />
+          </div>
         </Grid.Col>
         <Grid.Col span={5}>
           <Flex direction="column" gap="md">

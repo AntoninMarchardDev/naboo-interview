@@ -1,6 +1,7 @@
 import { ActivityFragment } from "@/graphql/generated/types";
 import { useGlobalStyles } from "@/utils";
-import { Box, Button, Flex, Image, Text } from "@mantine/core";
+import { Box, Button, Flex, Text } from "@mantine/core";
+import Image from "next/image";
 import Link from "next/link";
 
 interface ActivityListItemProps {
@@ -15,10 +16,10 @@ export function ActivityListItem({ activity }: ActivityListItemProps) {
       <Flex gap="md" align="center">
         <Image
           src="https://dummyimage.com/125"
-          radius="md"
-          alt="random image of city"
-          height="125"
-          width="125"
+          alt="activity thumbnail"
+          width={125}
+          height={125}
+          style={{ borderRadius: "var(--mantine-radius-md)" }}
         />
         <Box sx={{ maxWidth: "300px" }}>
           <Text className={classes.ellipsis}>{activity.city}</Text>

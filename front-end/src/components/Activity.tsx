@@ -1,6 +1,7 @@
 import { ActivityFragment } from "@/graphql/generated/types";
 import { useGlobalStyles } from "@/utils";
-import { Badge, Button, Card, Grid, Group, Image, Text } from "@mantine/core";
+import { Badge, Button, Card, Grid, Group, Text } from "@mantine/core";
+import Image from "next/image";
 import Link from "next/link";
 
 interface ActivityProps {
@@ -13,11 +14,12 @@ export function Activity({ activity }: ActivityProps) {
   return (
     <Grid.Col span={4}>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Card.Section>
+        <Card.Section style={{ position: "relative", height: 160 }}>
           <Image
-            src="https://dummyimage.com/480x4:3"
-            height={160}
-            alt="random image of city"
+            src="https://dummyimage.com/480x360"
+            fill
+            style={{ objectFit: "cover" }}
+            alt="activity thumbnail"
           />
         </Card.Section>
 
