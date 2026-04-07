@@ -29,7 +29,8 @@ import { PayloadDto } from './auth/types/jwtPayload.dto';
         return {
           autoSchemaFile: 'schema.gql',
           sortSchema: true,
-          playground: true,
+          playground: process.env.NODE_ENV !== 'production',
+          introspection: process.env.NODE_ENV !== 'production',
           buildSchemaOptions: { numberScalarMode: 'integer' },
           context: async ({ req, res }: { req: Request; res: Response }) => {
             const token =
