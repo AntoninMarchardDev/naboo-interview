@@ -1,3 +1,4 @@
+export * from "./ActivitiesLayout";
 export * from "./Activity";
 export * from "./ActivityListItem";
 export * from "./City";
