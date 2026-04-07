@@ -14,7 +14,7 @@ export class Activity extends Document {
   name!: string;
 
   @Field()
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   city!: string;
 
   @Field()
@@ -30,6 +30,7 @@ export class Activity extends Document {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+    index: true,
   })
   owner!: User;
 
@@ -38,3 +39,7 @@ export class Activity extends Document {
 }
 
 export const ActivitySchema = SchemaFactory.createForClass(Activity);
+
+// Compound indexes for common query patterns
+ActivitySchema.index({ owner: 1, createdAt: -1 });
+ActivitySchema.index({ city: 1, price: 1 });
