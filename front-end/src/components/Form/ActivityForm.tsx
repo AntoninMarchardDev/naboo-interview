@@ -34,7 +34,10 @@ export default function ActivityForm() {
   const [createActivity] = useMutation<
     CreateActivityMutation,
     CreateActivityMutationVariables
-  >(CreateActivity);
+  >(CreateActivity, {
+    refetchQueries: ["GetActivities", "GetUserActivities"],
+    onError: () => snackbar.error("Une erreur est survenue"),
+  });
 
   const form = useForm<CreateActivityInput>({
     initialValues: {
@@ -52,16 +55,11 @@ export default function ActivityForm() {
   });
 
   useEffect(() => {
-    if (debouncedSearch) {
-      searchCity(debouncedSearch)
-        .then((data) => {
-          setDisplayedCities(data.map((d) => ({ value: d.nom, label: d.nom })));
-        })
-        .catch((err) => {
-          snackbar.error(err?.message || "Une erreur est survenue");
-        });
-    }
-  }, [debouncedSearch, searchValue, snackbar]);
+    if (!debouncedSearch) return;
+    searchCity(debouncedSearch)
+      .then((data) => setDisplayedCities(data.map((d) => ({ value: d.nom, label: d.nom }))))
+      .catch((err) => snackbar.error(err?.message ?? "Une erreur est survenue"));
+  }, [debouncedSearch]); // snackbar is stable after P1-2; searchValue is already captured by debouncedSearch
 
   const handleSubmit = async (values: CreateActivityInput) => {
     try {
@@ -72,8 +70,6 @@ export default function ActivityForm() {
         },
       });
       router.back();
-    } catch (err) {
-      snackbar.error("Une erreur est survenue");
     } finally {
       setIsLoading(false);
     }
