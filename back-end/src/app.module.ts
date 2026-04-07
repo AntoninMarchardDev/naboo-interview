@@ -74,9 +74,10 @@ export class BaseAppModule {}
   imports: [
     BaseAppModule,
     MongooseModule.forRootAsync({
-      useFactory: () => {
-        return { uri: process.env.MONGO_URI };
-      },
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.getOrThrow<string>('MONGO_URI'),
+      }),
     }),
   ],
 })
