@@ -9,7 +9,6 @@ import { useDebounced } from "@/hooks";
 import { Divider, Flex, Grid } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 
@@ -37,46 +36,45 @@ export const getServerSideProps: GetServerSideProps<CityDetailsProps> = async ({
   >({
     query: GetActivitiesByCity,
     variables: {
-      city: params.city,
+      city: decodeURIComponent(params.city),
       activity: query.activity || null,
       price: query.price ? Number(query.price) : null,
     },
   });
   return {
-    props: { activities: response.data.getActivitiesByCity, city: params.city },
+    props: { activities: response.data.getActivitiesByCity, city: decodeURIComponent(params.city) },
   };
 };
 
-export default function ActivityDetails({
+export default function CityExplorerPage({
   activities,
   city,
 }: CityDetailsProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [searchActivity, setSearchActivity] = useState<string | undefined>(
-    searchParams?.get("activity") || undefined
+    typeof router.query.activity === "string" ? router.query.activity : undefined
   );
   const debouncedSearchActivity = useDebounced(searchActivity, 300);
 
   const [searchPrice, setSearchPrice] = useState<number | undefined>(
-    searchParams?.get("price") ? Number(searchParams.get("price")) : undefined
+    typeof router.query.price === "string" ? Number(router.query.price) : undefined
   );
   const debouncedSearchPrice = useDebounced(searchPrice, 300);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams();
+    const params = new URLSearchParams();
+    if (debouncedSearchActivity) params.set("activity", debouncedSearchActivity);
+    if (debouncedSearchPrice !== undefined) params.set("price", String(debouncedSearchPrice));
 
-    if (debouncedSearchActivity !== undefined)
-      searchParams.set("activity", debouncedSearchActivity);
+    const query = params.toString();
+    const nextUrl = `/explorer/${encodeURIComponent(city)}${query ? `?${query}` : ""}`;
 
-    if (debouncedSearchPrice !== undefined)
-      searchParams.set("price", debouncedSearchPrice.toString());
-
-    const stringParams = searchParams.toString();
-    router.push(`/explorer/${city}${stringParams ? `?${stringParams}` : ""}`);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Avoid pushing to history if the URL hasn't actually changed
+    if (router.asPath !== nextUrl) {
+      router.push(nextUrl);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city, debouncedSearchActivity, debouncedSearchPrice]);
 
   return (
