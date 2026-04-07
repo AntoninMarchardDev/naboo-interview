@@ -2,7 +2,7 @@ import { Activity, PageTitle } from "@/components";
 import { getApolloClient } from "@/graphql/apollo";
 import { useGlobalStyles } from "@/utils";
 import { Button, Flex, Grid, Text } from "@mantine/core";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import {
@@ -15,7 +15,7 @@ interface HomeProps {
   activities: GetLatestActivitiesQuery["getLatestActivities"];
 }
 
-export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const client = getApolloClient();
   const response = await client.query<
     GetLatestActivitiesQuery,
@@ -24,7 +24,10 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
     query: GetLatestActivities,
   });
 
-  return { props: { activities: response.data.getLatestActivities } };
+  return {
+    props: { activities: response.data.getLatestActivities },
+    revalidate: 60,
+  };
 };
 
 export default function Home({ activities }: HomeProps) {

@@ -7,7 +7,7 @@ import {
 import GetActivities from "@/graphql/queries/activity/getActivities";
 import { useAuth } from "@/hooks";
 import { Button, Grid, Group } from "@mantine/core";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -15,9 +15,7 @@ interface DiscoverProps {
   activities: GetActivitiesQuery["getActivities"];
 }
 
-export const getServerSideProps: GetServerSideProps<
-  DiscoverProps
-> = async () => {
+export const getStaticProps: GetStaticProps<DiscoverProps> = async () => {
   const client = getApolloClient();
   const response = await client.query<
     GetActivitiesQuery,
@@ -25,7 +23,10 @@ export const getServerSideProps: GetServerSideProps<
   >({
     query: GetActivities,
   });
-  return { props: { activities: response.data.getActivities } };
+  return {
+    props: { activities: response.data.getActivities },
+    revalidate: 30,
+  };
 };
 
 export default function Discover({ activities }: DiscoverProps) {
