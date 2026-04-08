@@ -17,8 +17,7 @@ export function City({ city }: CityProps) {
         padding="lg"
         radius="md"
         withBorder
-        sx={{ width: "100%" }}
-      >
+>
         <Card.Section style={{ position: "relative", height: 160 }}>
           <Image
             src="https://dummyimage.com/480x360"

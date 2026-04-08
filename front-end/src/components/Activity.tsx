@@ -12,7 +12,7 @@ export function Activity({ activity }: ActivityProps) {
   const { classes } = useGlobalStyles();
 
   return (
-    <Grid.Col span={4}>
+    <Grid.Col span={12} sm={6} lg={4}>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Card.Section style={{ position: "relative", height: 160 }}>
           <Image

@@ -5,7 +5,7 @@ import {
   GetCitiesQueryVariables,
 } from "@/graphql/generated/types";
 import GetCities from "@/graphql/queries/city/getCities";
-import { Flex } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 
@@ -33,13 +33,19 @@ export default function Explorer({ cities }: ExplorerProps) {
         <title>Explorer | Candidator</title>
       </Head>
       <PageTitle title="Trouvez une activité dans votre ville" />
-      <Flex direction="column" gap="1rem">
+      <Grid>
         {cities.length > 0 ? (
-          cities.map((city) => <City city={city} key={city} />)
+          cities.map((city) => (
+            <Grid.Col key={city} span={12} sm={6} lg={4}>
+              <City city={city} />
+            </Grid.Col>
+          ))
         ) : (
-          <EmptyData />
+          <Grid.Col span={12}>
+            <EmptyData />
+          </Grid.Col>
         )}
-      </Flex>
+      </Grid>
     </>
   );
 }

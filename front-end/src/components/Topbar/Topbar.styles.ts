@@ -32,6 +32,52 @@ export const useTopbarStyles = createStyles((theme) => ({
     },
   },
 
+  hiddenDesktop: {
+    [theme.fn.largerThan("sm")]: {
+      display: "none",
+    },
+  },
+
+  drawerLink: {
+    display: "flex",
+    alignItems: "center",
+    borderRadius: theme.radius.sm,
+    padding: `${rem(8)} ${rem(12)}`,
+    textDecoration: "none",
+    color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 500,
+
+    "&:hover": {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
+    },
+  },
+
+  drawerSubLink: {
+    display: "flex",
+    alignItems: "center",
+    borderRadius: theme.radius.sm,
+    padding: `${rem(6)} ${rem(12)} ${rem(6)} ${rem(24)}`,
+    textDecoration: "none",
+    color: theme.colorScheme === "dark" ? theme.colors.dark[1] : theme.colors.gray[7],
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 400,
+
+    "&:hover": {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
+    },
+  },
+
+  drawerChevron: {
+    transition: "transform 200ms ease",
+  },
+
   mainLink: {
     textDecoration: "none",
   },
