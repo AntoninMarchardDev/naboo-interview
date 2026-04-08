@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 const GetUserActivities = gql`
   query GetUserActivities {
     getActivitiesByUser {
-      ...Activity
+      ...ActivityWithOwner
     }
   }
   ${ActivityWithOwnerFragment}

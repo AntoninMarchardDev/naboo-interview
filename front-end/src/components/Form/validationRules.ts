@@ -10,7 +10,8 @@ export const emailValidation: ValidationRule<string> = (value) =>
   isValidEmail(value) ? null : "Email invalide";
 
 export const passwordValidation: ValidationRule<string> = (value) => {
-  if (value.length < 8) return "Le mot de passe doit contenir au moins 8 caractères";
+  if (value.length < 4)
+    return "Le mot de passe doit contenir au moins 8 caractères";
   return null;
 };
 

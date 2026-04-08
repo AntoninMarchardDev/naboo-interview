@@ -14,6 +14,8 @@ interface ActivityProps {
 
 export function Activity({ activity }: ActivityProps) {
   const { classes } = useGlobalStyles();
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
 
   return (
     <Grid.Col span={12} sm={6} lg={4}>
@@ -41,6 +43,11 @@ export function Activity({ activity }: ActivityProps) {
           <Badge color="yellow" variant="light">
             {`${activity.price}€/j`}
           </Badge>
+          {isAdmin && activity.createdAt && (
+            <Badge color="gray" variant="outline" size="xs">
+              Debug: {new Date(activity.createdAt).toLocaleDateString()}
+            </Badge>
+          )}
         </Group>
 
         <Text size="sm" color="dimmed" className={classes.ellipsis}>

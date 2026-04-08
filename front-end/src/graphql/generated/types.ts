@@ -133,11 +133,18 @@ export type User = {
   firstName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   lastName: Scalars['String']['output'];
+  role: Scalars['String']['output'];
 };
 
-export type ActivityFragment = { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, owner: { __typename?: 'User', firstName: string, lastName: string } };
+export type ActivityWithOwnerFragment = { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, owner: { __typename?: 'User', firstName: string, lastName: string } };
+
+export type ActivityFragment = { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, createdAt?: string | null };
 
 export type FavoriteFragment = { __typename?: 'Favorite', id: string, activity: { __typename?: 'Activity', id: string } };
+
+export type ActivityWithoutOwnerFragment = { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number };
+
+export type FavoriteWithActivityFragment = { __typename?: 'Favorite', id: string, activity: { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number } };
 
 export type OwnerFragment = { __typename?: 'User', firstName: string, lastName: string };
 
@@ -184,7 +191,7 @@ export type RemoveFromFavoriteMutation = { __typename?: 'Mutation', removeFavori
 export type GetActivitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetActivitiesQuery = { __typename?: 'Query', getActivities: Array<{ __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, owner: { __typename?: 'User', firstName: string, lastName: string } }> };
+export type GetActivitiesQuery = { __typename?: 'Query', getActivities: Array<{ __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, createdAt?: string | null }> };
 
 export type GetActivitiesByCityQueryVariables = Exact<{
   activity?: InputMaybe<Scalars['String']['input']>;
@@ -193,7 +200,7 @@ export type GetActivitiesByCityQueryVariables = Exact<{
 }>;
 
 
-export type GetActivitiesByCityQuery = { __typename?: 'Query', getActivitiesByCity: Array<{ __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, owner: { __typename?: 'User', firstName: string, lastName: string } }> };
+export type GetActivitiesByCityQuery = { __typename?: 'Query', getActivitiesByCity: Array<{ __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, createdAt?: string | null }> };
 
 export type GetActivityQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -205,7 +212,7 @@ export type GetActivityQuery = { __typename?: 'Query', getActivity: { __typename
 export type GetLatestActivitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLatestActivitiesQuery = { __typename?: 'Query', getLatestActivities: Array<{ __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, owner: { __typename?: 'User', firstName: string, lastName: string } }> };
+export type GetLatestActivitiesQuery = { __typename?: 'Query', getLatestActivities: Array<{ __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number, createdAt?: string | null }> };
 
 export type GetUserActivitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -215,7 +222,7 @@ export type GetUserActivitiesQuery = { __typename?: 'Query', getActivitiesByUser
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', getMe: { __typename?: 'User', id: string, firstName: string, lastName: string, email: string } };
+export type GetUserQuery = { __typename?: 'Query', getMe: { __typename?: 'User', id: string, firstName: string, lastName: string, email: string, role: string } };
 
 export type GetCitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -226,3 +233,8 @@ export type GetFavoritesByUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetFavoritesByUserQuery = { __typename?: 'Query', getFavorites: Array<{ __typename?: 'Favorite', id: string, activity: { __typename?: 'Activity', id: string } }> };
+
+export type GetMyFavoritesWithActivitiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyFavoritesWithActivitiesQuery = { __typename?: 'Query', getFavorites: Array<{ __typename?: 'Favorite', id: string, activity: { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number } }> };

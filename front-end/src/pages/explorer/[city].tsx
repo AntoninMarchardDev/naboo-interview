@@ -1,4 +1,10 @@
-import { Activity, EmptyData, Filters, PageTitle } from "@/components";
+import {
+  ActivitiesLayout,
+  Activity,
+  EmptyData,
+  Filters,
+  PageTitle,
+} from "@/components";
 import { getApolloClient } from "@/graphql/apollo";
 import {
   GetActivitiesByCityQuery,
@@ -107,18 +113,11 @@ export default function CityExplorerPage({
           />
         </Grid.Col>
         <Grid.Col span={8}>
-          <Flex direction="column" gap="lg">
-            {activities.length > 0 ? (
-              activities.map((activity, idx) => (
-                <Fragment key={activity.id}>
-                  <Activity activity={activity} />
-                  {idx < activities.length - 1 && <Divider my="sm" />}
-                </Fragment>
-              ))
-            ) : (
-              <EmptyData />
-            )}
-          </Flex>
+          {activities.length > 0 ? (
+            <ActivitiesLayout activities={activities} />
+          ) : (
+            <EmptyData />
+          )}
         </Grid.Col>
       </Grid>
     </>

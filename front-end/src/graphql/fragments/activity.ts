@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import OwnerFragment from "./owner";
 
 export const ActivityWithOwnerFragment = gql`
-  fragment Activity on Activity {
+  fragment ActivityWithOwner on Activity {
     id
     city
     description
@@ -22,5 +22,6 @@ export const ActivityFragment = gql`
     description
     name
     price
+    createdAt
   }
 `;

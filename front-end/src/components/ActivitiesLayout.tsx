@@ -7,7 +7,7 @@ import { Button, Grid, Group, Skeleton } from "@mantine/core";
 import Link from "next/link";
 
 interface ActivitiesLayoutProps {
-  title: string;
+  title?: string;
   activities: ActivityFragment[];
   showCreateButton?: boolean;
 }
@@ -26,7 +26,7 @@ export function ActivitiesLayout({
   return (
     <>
       <Group position="apart">
-        <PageTitle title={title} />
+        {title && <PageTitle title={title} />}
         {showCreateButton && (
           <Link href="/activities/create">
             <Button>Ajouter une activité</Button>
