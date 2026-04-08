@@ -76,7 +76,7 @@ export class ActivityService {
       .find({
         $and: [
           { city },
-          ...(price !== undefined ? [{ price }] : []),
+          ...(price != null ? [{ price }] : []),
           ...(activity
             ? [{ name: { $regex: escapeRegex(activity), $options: 'i' } }]
             : []),

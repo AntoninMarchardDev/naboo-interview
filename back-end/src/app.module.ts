@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import depthLimit from 'graphql-depth-limit';
+import * as depthLimit from 'graphql-depth-limit';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ActivityModule } from './activity/activity.module';
