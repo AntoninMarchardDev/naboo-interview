@@ -1,4 +1,10 @@
-import { ActivityListItem, EmptyData, Filters, PageTitle } from "@/components";
+import {
+  Activity,
+  ActivityListItem,
+  EmptyData,
+  Filters,
+  PageTitle,
+} from "@/components";
 import { getApolloClient } from "@/graphql/apollo";
 import {
   GetActivitiesByCityQuery,
@@ -42,7 +48,10 @@ export const getServerSideProps: GetServerSideProps<CityDetailsProps> = async ({
     },
   });
   return {
-    props: { activities: response.data.getActivitiesByCity, city: decodeURIComponent(params.city) },
+    props: {
+      activities: response.data.getActivitiesByCity,
+      city: decodeURIComponent(params.city),
+    },
   };
 };
 
@@ -53,19 +62,25 @@ export default function CityExplorerPage({
   const router = useRouter();
 
   const [searchActivity, setSearchActivity] = useState<string | undefined>(
-    typeof router.query.activity === "string" ? router.query.activity : undefined
+    typeof router.query.activity === "string"
+      ? router.query.activity
+      : undefined,
   );
   const [debouncedSearchActivity] = useDebouncedValue(searchActivity, 300);
 
   const [searchPrice, setSearchPrice] = useState<number | undefined>(
-    typeof router.query.price === "string" ? Number(router.query.price) : undefined
+    typeof router.query.price === "string"
+      ? Number(router.query.price)
+      : undefined,
   );
   const [debouncedSearchPrice] = useDebouncedValue(searchPrice, 300);
 
   useEffect(() => {
     const params = new URLSearchParams();
-    if (debouncedSearchActivity) params.set("activity", debouncedSearchActivity);
-    if (debouncedSearchPrice !== undefined) params.set("price", String(debouncedSearchPrice));
+    if (debouncedSearchActivity)
+      params.set("activity", debouncedSearchActivity);
+    if (debouncedSearchPrice !== undefined)
+      params.set("price", String(debouncedSearchPrice));
 
     const query = params.toString();
     const nextUrl = `/explorer/${encodeURIComponent(city)}${query ? `?${query}` : ""}`;
@@ -74,7 +89,7 @@ export default function CityExplorerPage({
     if (router.asPath !== nextUrl) {
       router.push(nextUrl);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city, debouncedSearchActivity, debouncedSearchPrice]);
 
   return (
@@ -102,7 +117,7 @@ export default function CityExplorerPage({
             {activities.length > 0 ? (
               activities.map((activity, idx) => (
                 <Fragment key={activity.id}>
-                  <ActivityListItem activity={activity} />
+                  <Activity activity={activity} />
                   {idx < activities.length - 1 && <Divider my="sm" />}
                 </Fragment>
               ))
