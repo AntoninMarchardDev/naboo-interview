@@ -1,6 +1,5 @@
 export * from "./ActivitiesLayout";
 export * from "./Activity";
-export * from "./ActivityListItem";
 export * from "./City";
 export * from "./EmptyData";
 export * from "./Filters";

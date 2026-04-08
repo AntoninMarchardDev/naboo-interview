@@ -1,10 +1,4 @@
-import {
-  Activity,
-  ActivityListItem,
-  EmptyData,
-  Filters,
-  PageTitle,
-} from "@/components";
+import { Activity, EmptyData, Filters, PageTitle } from "@/components";
 import { getApolloClient } from "@/graphql/apollo";
 import {
   GetActivitiesByCityQuery,
