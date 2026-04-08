@@ -1,5 +1,5 @@
-import { ActivitiesLayout, PageTitle } from "@/components";
-import { Favorite } from "@/graphql/generated/types";
+import { FavoritesList, PageTitle } from "@/components";
+import { FavoriteWithActivityFragment } from "@/graphql/generated/types";
 import GetMyFavoritesWithActivities from "@/graphql/queries/favorite/getFavoritesWithActivities";
 import { withAuth } from "@/hocs";
 import { useAuth } from "@/hooks";
@@ -15,8 +15,7 @@ const Profile = () => {
     fetchPolicy: "cache-and-network",
   });
 
-  const activities =
-    data?.getFavorites.map((favorite: Favorite) => favorite.activity) ?? [];
+  const favorites: FavoriteWithActivityFragment[] = data?.getFavorites ?? [];
 
   const initials = user
     ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase()
@@ -38,11 +37,7 @@ const Profile = () => {
           <Text>{user?.lastName}</Text>
         </Flex>
       </Flex>
-      <ActivitiesLayout
-        title="Mes favoris"
-        activities={activities}
-        showCreateButton={false}
-      />
+      <FavoritesList key={favorites.length} favorites={favorites} />
     </>
   );
 };

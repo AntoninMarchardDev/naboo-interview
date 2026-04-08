@@ -6,6 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Favorite } from './favorite.schema';
 import { Model } from 'mongoose';
+import { FavoriteOrderItemInput } from './types/favorite.input';
 
 @Injectable()
 export class FavoriteService {
@@ -18,6 +19,7 @@ export class FavoriteService {
     return this.favoriteModel
       .find({ user: userId })
       .populate({ path: 'activity' })
+      .sort({ order: 1 })
       .exec();
   }
 
@@ -30,7 +32,12 @@ export class FavoriteService {
       throw new ConflictException('Activity already in favorites');
     }
 
-    return this.favoriteModel.create({ user: userId, activity: activityId });
+    const count = await this.favoriteModel.countDocuments({ user: userId });
+    return this.favoriteModel.create({
+      user: userId,
+      activity: activityId,
+      order: count,
+    });
   }
 
   async remove(userId: string, activityId: string): Promise<Favorite> {
@@ -44,5 +51,19 @@ export class FavoriteService {
     }
 
     return favorite;
+  }
+
+  async reorder(
+    userId: string,
+    items: FavoriteOrderItemInput[],
+  ): Promise<Favorite[]> {
+    await Promise.all(
+      items.map(({ id, order }) =>
+        this.favoriteModel
+          .updateOne({ _id: id, user: userId }, { order })
+          .exec(),
+      ),
+    );
+    return this.findByUser(userId);
   }
 }

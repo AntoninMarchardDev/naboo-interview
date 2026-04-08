@@ -22,6 +22,7 @@ export const ActivityWithoutOwnerFragment = gql`
 export const FavoriteWithActivityFragment = gql`
   fragment FavoriteWithActivity on Favorite {
     id
+    order
     activity {
       ...ActivityWithoutOwner
     }

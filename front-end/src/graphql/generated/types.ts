@@ -47,6 +47,11 @@ export type Favorite = {
   user: User;
 };
 
+export type FavoriteOrderItemInput = {
+  id: Scalars['String']['input'];
+  order: Scalars['Int']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addFavorite: Favorite;
@@ -55,6 +60,7 @@ export type Mutation = {
   logout: Scalars['Boolean']['output'];
   register: User;
   removeFavorite: Favorite;
+  reorderFavorites: Array<Favorite>;
 };
 
 
@@ -80,6 +86,11 @@ export type MutationRegisterArgs = {
 
 export type MutationRemoveFavoriteArgs = {
   removeFromFavoriteInput: RemoveFromFavoriteInput;
+};
+
+
+export type MutationReorderFavoritesArgs = {
+  reorderFavoritesInput: ReorderFavoritesInput;
 };
 
 export type Query = {
@@ -108,6 +119,10 @@ export type QueryGetActivityArgs = {
 
 export type RemoveFromFavoriteInput = {
   activityId: Scalars['String']['input'];
+};
+
+export type ReorderFavoritesInput = {
+  favorites: Array<FavoriteOrderItemInput>;
 };
 
 export type SignInDto = {
@@ -144,7 +159,7 @@ export type FavoriteFragment = { __typename?: 'Favorite', id: string, activity: 
 
 export type ActivityWithoutOwnerFragment = { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number };
 
-export type FavoriteWithActivityFragment = { __typename?: 'Favorite', id: string, activity: { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number } };
+export type FavoriteWithActivityFragment = { __typename?: 'Favorite', id: string, order: number, activity: { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number } };
 
 export type OwnerFragment = { __typename?: 'User', firstName: string, lastName: string };
 
@@ -187,6 +202,13 @@ export type RemoveFromFavoriteMutationVariables = Exact<{
 
 
 export type RemoveFromFavoriteMutation = { __typename?: 'Mutation', removeFavorite: { __typename?: 'Favorite', id: string, activity: { __typename?: 'Activity', id: string } } };
+
+export type ReorderFavoritesMutationVariables = Exact<{
+  reorderFavoritesInput: ReorderFavoritesInput;
+}>;
+
+
+export type ReorderFavoritesMutation = { __typename?: 'Mutation', reorderFavorites: Array<{ __typename?: 'Favorite', id: string, order: number, activity: { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number } }> };
 
 export type GetActivitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -237,4 +259,4 @@ export type GetFavoritesByUserQuery = { __typename?: 'Query', getFavorites: Arra
 export type GetMyFavoritesWithActivitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyFavoritesWithActivitiesQuery = { __typename?: 'Query', getFavorites: Array<{ __typename?: 'Favorite', id: string, activity: { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number } }> };
+export type GetMyFavoritesWithActivitiesQuery = { __typename?: 'Query', getFavorites: Array<{ __typename?: 'Favorite', id: string, order: number, activity: { __typename?: 'Activity', id: string, city: string, description: string, name: string, price: number } }> };

@@ -36,6 +36,11 @@ type Favorite {
   user: User!
 }
 
+input FavoriteOrderItemInput {
+  id: String!
+  order: Int!
+}
+
 type Mutation {
   addFavorite(addToFavoriteInput: AddToFavoriteInput!): Favorite!
   createActivity(createActivityInput: CreateActivityInput!): Activity!
@@ -43,6 +48,7 @@ type Mutation {
   logout: Boolean!
   register(signUpInput: SignUpInput!): User!
   removeFavorite(removeFromFavoriteInput: RemoveFromFavoriteInput!): Favorite!
+  reorderFavorites(reorderFavoritesInput: ReorderFavoritesInput!): [Favorite!]!
 }
 
 type Query {
@@ -58,6 +64,10 @@ type Query {
 
 input RemoveFromFavoriteInput {
   activityId: String!
+}
+
+input ReorderFavoritesInput {
+  favorites: [FavoriteOrderItemInput!]!
 }
 
 type SignInDto {

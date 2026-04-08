@@ -7,6 +7,7 @@ import { ContextWithJWTPayload } from 'src/auth/types/context';
 import {
   AddToFavoriteInput,
   RemoveFromFavoriteInput,
+  ReorderFavoritesInput,
 } from './types/favorite.input';
 
 @Resolver(() => Favorite)
@@ -43,6 +44,18 @@ export class FavoriteResolver {
     return this.favoriteService.remove(
       context.jwtPayload.id,
       removeFromFavoriteInput.activityId,
+    );
+  }
+
+  @Mutation(() => [Favorite])
+  @UseGuards(AuthGuard)
+  async reorderFavorites(
+    @Context() context: ContextWithJWTPayload,
+    @Args('reorderFavoritesInput') reorderFavoritesInput: ReorderFavoritesInput,
+  ): Promise<Favorite[]> {
+    return this.favoriteService.reorder(
+      context.jwtPayload.id,
+      reorderFavoritesInput.favorites,
     );
   }
 }

@@ -14,6 +14,7 @@ import Logout from "@/graphql/mutations/auth/logout";
 import Signin from "@/graphql/mutations/auth/signin";
 import Signup from "@/graphql/mutations/auth/signup";
 import GetUser from "@/graphql/queries/auth/getUser";
+import { getApolloClient } from "@/graphql/apollo";
 import { useSnackbar } from "@/hooks";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -90,6 +91,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       setIsLoading(true);
       await logout();
+      await getApolloClient().clearStore();
       setUser(null);
       router.push("/");
     } catch {
