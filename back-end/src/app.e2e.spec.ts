@@ -66,7 +66,7 @@ describe('App e2e', () => {
 
     const getMeResponse = await request(app.getHttpServer())
       .post('/graphql')
-      .set('jwt', jwt)
+      .set('Authorization', `Bearer ${jwt}`)
       .send({
         query: `
           query {

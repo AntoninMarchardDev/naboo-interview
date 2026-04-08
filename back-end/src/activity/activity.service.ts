@@ -18,7 +18,6 @@ export class ActivityService {
   async findAll(): Promise<Activity[]> {
     return this.activityModel
       .find()
-      .populate('owner')
       .sort({ createdAt: -1 })
       .lean<Activity[]>()
       .exec();
@@ -27,7 +26,6 @@ export class ActivityService {
   async findLatest(): Promise<Activity[]> {
     return this.activityModel
       .find()
-      .populate('owner')
       .sort({ createdAt: -1 })
       .limit(3)
       .lean<Activity[]>()

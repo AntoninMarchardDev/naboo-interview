@@ -12,6 +12,10 @@ type Activity {
   price: Int!
 }
 
+input AddToFavoriteInput {
+  activityId: String!
+}
+
 input CreateActivityInput {
   city: String!
   description: String!
@@ -24,11 +28,21 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Favorite {
+  activity: Activity!
+  createdAt: DateTime
+  id: ID!
+  order: Int!
+  user: User!
+}
+
 type Mutation {
+  addFavorite(addToFavoriteInput: AddToFavoriteInput!): Favorite!
   createActivity(createActivityInput: CreateActivityInput!): Activity!
   login(signInInput: SignInInput!): SignInDto!
   logout: Boolean!
   register(signUpInput: SignUpInput!): User!
+  removeFavorite(removeFromFavoriteInput: RemoveFromFavoriteInput!): Favorite!
 }
 
 type Query {
@@ -37,8 +51,13 @@ type Query {
   getActivitiesByUser: [Activity!]!
   getActivity(id: String!): Activity!
   getCities: [String!]!
+  getFavorites: [Favorite!]!
   getLatestActivities: [Activity!]!
   getMe: User!
+}
+
+input RemoveFromFavoriteInput {
+  activityId: String!
 }
 
 type SignInDto {
@@ -62,5 +81,4 @@ type User {
   firstName: String!
   id: ID!
   lastName: String!
-  password: String!
 }

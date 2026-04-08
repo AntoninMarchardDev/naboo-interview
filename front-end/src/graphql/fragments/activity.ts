@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import OwnerFragment from "./owner";
 
-const ActivityFragment = gql`
+export const ActivityWithOwnerFragment = gql`
   fragment Activity on Activity {
     id
     city
@@ -15,4 +15,12 @@ const ActivityFragment = gql`
   ${OwnerFragment}
 `;
 
-export default ActivityFragment;
+export const ActivityFragment = gql`
+  fragment Activity on Activity {
+    id
+    city
+    description
+    name
+    price
+  }
+`;

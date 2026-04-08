@@ -1,4 +1,4 @@
-import { Activity, PageTitle } from "@/components";
+import { ActivitiesLayout, Activity, PageTitle } from "@/components";
 import { getApolloClient } from "@/graphql/apollo";
 import { useGlobalStyles } from "@/utils";
 import { Button, Flex, Grid, Text } from "@mantine/core";
@@ -37,7 +37,10 @@ export default function Home({ activities }: HomeProps) {
     <>
       <Head>
         <title>Accueil | Candidator</title>
-        <meta name="description" content="Découvrez et partagez des activités près de chez vous." />
+        <meta
+          name="description"
+          content="Découvrez et partagez des activités près de chez vous."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -61,7 +64,6 @@ export default function Home({ activities }: HomeProps) {
         {activities.length > 0 && (
           <>
             <Flex align="center" justify="space-between">
-              <h2>Découvrez les dernières activités</h2>
               <Link href={`/discover`} className={classes.link}>
                 <Button
                   variant="outline"
@@ -74,11 +76,11 @@ export default function Home({ activities }: HomeProps) {
                 </Button>
               </Link>
             </Flex>
-            <Grid>
-              {activities.map((activity) => (
-                <Activity activity={activity} key={activity.id} />
-              ))}
-            </Grid>
+            <ActivitiesLayout
+              title="Découvrez les dernières activités"
+              activities={activities}
+              showCreateButton={false}
+            />
           </>
         )}
       </main>

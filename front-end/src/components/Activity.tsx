@@ -1,8 +1,12 @@
-import { ActivityFragment } from "@/graphql/generated/types";
+import { ActivityFragment, Favorite, User } from "@/graphql/generated/types";
+import GetFavoritesByUser from "@/graphql/queries/favorite/getFavoritesByUser";
+import { useAuth } from "@/hooks";
 import { useGlobalStyles } from "@/utils";
+import { useQuery } from "@apollo/client";
 import { Badge, Button, Card, Grid, Group, Text } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
+import { ActivityFavoriteButton } from "./ActivityFavoriteButton";
 
 interface ActivityProps {
   activity: ActivityFragment;
@@ -27,6 +31,7 @@ export function Activity({ activity }: ActivityProps) {
           <Text weight={500} className={classes.ellipsis}>
             {activity.name}
           </Text>
+          <ActivityFavoriteButton activity={activity} />
         </Group>
 
         <Group mt="md" mb="xs">

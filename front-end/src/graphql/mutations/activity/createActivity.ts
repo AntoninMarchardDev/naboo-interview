@@ -1,4 +1,4 @@
-import ActivityFragment from "@/graphql/fragments/activity";
+import { ActivityWithOwnerFragment } from "@/graphql/fragments/activity";
 import gql from "graphql-tag";
 
 const CreateActivity = gql`
@@ -7,7 +7,7 @@ const CreateActivity = gql`
       ...Activity
     }
   }
-  ${ActivityFragment}
+  ${ActivityWithOwnerFragment}
 `;
 
 export default CreateActivity;

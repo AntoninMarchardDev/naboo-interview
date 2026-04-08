@@ -1,6 +1,9 @@
 import { Activity, EmptyData, PageTitle } from "@/components";
 import { ActivityFragment } from "@/graphql/generated/types";
-import { Button, Grid, Group } from "@mantine/core";
+import GetFavoritesByUser from "@/graphql/queries/favorite/getFavoritesByUser";
+import { useAuth } from "@/hooks";
+import { useQuery } from "@apollo/client";
+import { Button, Grid, Group, Skeleton } from "@mantine/core";
 import Link from "next/link";
 
 interface ActivitiesLayoutProps {
@@ -9,7 +12,17 @@ interface ActivitiesLayoutProps {
   showCreateButton?: boolean;
 }
 
-export function ActivitiesLayout({ title, activities, showCreateButton }: ActivitiesLayoutProps) {
+export function ActivitiesLayout({
+  title,
+  activities,
+  showCreateButton,
+}: ActivitiesLayoutProps) {
+  const { user } = useAuth();
+
+  useQuery(GetFavoritesByUser, {
+    skip: !user,
+  });
+
   return (
     <>
       <Group position="apart">
@@ -22,7 +35,9 @@ export function ActivitiesLayout({ title, activities, showCreateButton }: Activi
       </Group>
       <Grid>
         {activities.length > 0 ? (
-          activities.map((activity) => <Activity activity={activity} key={activity.id} />)
+          activities.map((activity) => (
+            <Activity activity={activity} key={activity.id} />
+          ))
         ) : (
           <EmptyData />
         )}

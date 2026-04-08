@@ -1,4 +1,4 @@
-import ActivityFragment from "@/graphql/fragments/activity";
+import { ActivityFragment } from "@/graphql/fragments/activity";
 import gql from "graphql-tag";
 
 const GetLatestActivities = gql`

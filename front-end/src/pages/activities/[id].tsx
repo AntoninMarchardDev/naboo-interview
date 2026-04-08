@@ -3,6 +3,7 @@ import { getApolloClient } from "@/graphql/apollo";
 import {
   GetActivityQuery,
   GetActivityQueryVariables,
+  User,
 } from "@/graphql/generated/types";
 import GetActivity from "@/graphql/queries/activity/getActivity";
 import { Badge, Flex, Grid, Group, Text } from "@mantine/core";
@@ -10,6 +11,8 @@ import Image from "next/image";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { ActivityFavoriteButton } from "@/components/ActivityFavoriteButton";
+import { useAuth } from "@/hooks";
 
 interface ActivityDetailsProps {
   activity: GetActivityQuery["getActivity"];
@@ -34,6 +37,8 @@ export const getServerSideProps: GetServerSideProps<
 export default function ActivityDetailPage({ activity }: ActivityDetailsProps) {
   const router = useRouter();
 
+  const { user } = useAuth();
+
   return (
     <>
       <Head>
@@ -42,13 +47,31 @@ export default function ActivityDetailPage({ activity }: ActivityDetailsProps) {
       <PageTitle title={activity.name} prevPath={router.back} />
       <Grid>
         <Grid.Col span={7}>
-          <div style={{ position: "relative", width: "100%", height: 400, borderRadius: "var(--mantine-radius-md)", overflow: "hidden" }}>
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              height: 400,
+              borderRadius: "var(--mantine-radius-md)",
+              overflow: "hidden",
+            }}
+          >
             <Image
               src="https://dummyimage.com/640x480"
               fill
               style={{ objectFit: "cover" }}
               alt="activity image"
             />
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                padding: "10px",
+              }}
+            >
+              <ActivityFavoriteButton activity={activity} />
+            </div>
           </div>
         </Grid.Col>
         <Grid.Col span={5}>
