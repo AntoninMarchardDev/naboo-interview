@@ -6,7 +6,7 @@ export default function Logout() {
 
   useEffect(() => {
     handleLogout();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  });
 
   return null;
 }

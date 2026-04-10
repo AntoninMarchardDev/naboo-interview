@@ -35,7 +35,7 @@ function ActivityCard({ activity }: { activity: ActivityFragment }) {
         <Text weight={500} className={classes.ellipsis}>
           {activity.name}
         </Text>
-        <ActivityFavoriteButton activity={activity} />
+        {user && <ActivityFavoriteButton activity={activity} />}
       </Group>
 
       <Group mt="md" mb="xs">
